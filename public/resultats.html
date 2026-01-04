@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="fr-BJ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats Scolaires | Les Bulles de Joie</title>
+    <meta name="description" content="Portail sécurisé des résultats scolaires. Consultez les évaluations de votre enfant.">
+    
+    <!-- Security Headers Meta -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;">
+    
+    <!-- SEO -->
+    <meta name="keywords" content="résultats scolaires, bulletins, évaluations, suivi scolaire, portail parents">
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <!-- Security -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+</head>
+<body>
+    <!-- Intro Animation -->
+    <div id="intro-overlay" class="intro-overlay">
+        <div class="intro-container">
+            <div class="intro-logo">
+                <div class="logo-fallback">BDJ</div>
+            </div>
+            <h1 class="logo-text">
+                <span class="text-part">Portail</span>
+                <span class="text-part">Sécurisé</span>
+            </h1>
+            <p class="logo-subtitle">Résultats Scolaires</p>
+            <p class="logo-subtitle">2025-2026</p>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i> Connexion HTTPS sécurisée
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-img">
+                    <div class="logo-fallback-small">BDJ</div>
+                </div>
+                <div class="logo-text">
+                    <h1>Les Bulles de Joie</h1>
+                    <p>Portail des Résultats</p>
+                </div>
+            </a>
+            
+            <nav class="main-nav">
+                <button class="nav-toggle" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Accueil</a></li>
+                    <li><a href="resultats.html" class="nav-link active">Résultats</a></li>
+                    <li><a href="contact.html" class="nav-link">Support</a></li>
+                    <li><a href="#" class="nav-link logout-btn" id="logoutBtn" style="display:none;">
+                        <i class="fas fa-sign-out-alt"></i> Déconnexion
+                    </a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Security Alert -->
+    <div class="security-alert" id="securityAlert">
+        <div class="container">
+            <i class="fas fa-lock"></i>
+            <span>Connexion sécurisée • Ne partagez jamais vos identifiants</span>
+            <button class="close-alert" onclick="closeSecurityAlert()">&times;</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero results-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Portail des <span class="title-highlight">Résultats</span>
+                    </h1>
+                    <p class="hero-subtitle">Accès sécurisé aux évaluations</p>
+                    
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <div class="stat-number" id="connectedUsers">0</div>
+                            <div class="stat-label">Parents connectés</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">100%</div>
+                            <div class="stat-label">Données chiffrées</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">24/7</div>
+                            <div class="stat-label">Disponibilité</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section class="login-section" id="loginSection">
+            <div class="container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <h2><i class="fas fa-user-shield"></i> Connexion Sécurisée</h2>
+                        <p>Accès réservé aux parents et tuteurs</p>
+                    </div>
+                    
+                    <form id="loginForm" class="login-form">
+                        <div class="form-group">
+                            <label for="username">
+                                <i class="fas fa-user"></i> Identifiant
+                            </label>
+                            <input type="text" 
+                                   id="username" 
+                                   name="username"
+                                   placeholder="Votre identifiant"
+                                   required
+                                   autocomplete="username"
+                                   pattern="[A-Za-z0-9\-]+"
+                                   title="Lettres, chiffres et tirets seulement">
+                            <div class="form-hint">Ex: CE1-001, CE2-015</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">
+                                <i class="fas fa-key"></i> Mot de passe
+                            </label>
+                            <div class="password-container">
+                                <input type="password" 
+                                       id="password" 
+                                       name="password"
+                                       placeholder="Votre mot de passe"
+                                       required
+                                       autocomplete="current-password"
+                                       minlength="4">
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="form-hint">Prénom de l'enfant (minuscules)</div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="captcha-container">
+                                <div class="captcha">
+                                    <span id="captchaText">3 + 5 = ?</span>
+                                </div>
+                                <input type="text" 
+                                       id="captchaInput" 
+                                       placeholder="Réponse"
+                                       required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span id="loginText">Se connecter</span>
+                            <div class="spinner" id="loginSpinner" style="display:none;"></div>
+                        </button>
+                        
+                        <div class="form-footer">
+                            <div class="remember-me">
+                                <input type="checkbox" id="remember">
+                                <label for="remember">Rester connecté</label>
+                            </div>
+                            <a href="#" class="forgot-password">Identifiants oubliés ?</a>
+                        </div>
+                    </form>
+                    
+                    <div class="login-info">
+                        <div class="info-box">
+                            <i class="fas fa-info-circle"></i>
+                            <p>Pour votre sécurité, votre session expire automatiquement après 15 minutes d'inactivité.</p>
+                        </div>
+                        <div class="info-box">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Ne communiquez jamais vos identifiants par email ou téléphone.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section class="results-section" id="resultsSection" style="display:none;">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap"></i>
+                        Résultats Scolaires
+                    </h2>
+                    <p class="section-subtitle">Année scolaire 2025-2026 • Trimestre 1</p>
+                    
+                    <div class="user-info">
+                        <div class="avatar">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div>
+                            <h3 id="studentName">--</h3>
+                            <p id="studentClass">Classe: -- • Identifiant: <span id="studentId">--</span></p>
+                        </div>
+                        <div class="last-login">
+                            <i class="fas fa-clock"></i>
+                            Dernière connexion: <span id="lastLogin">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Dashboard -->
+                <div class="dashboard">
+                    <div class="dashboard-card main-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-line"></i> Vue d'ensemble</h3>
+                            <div class="card-actions">
+                                <button class="btn-icon" onclick="printResults()" title="Imprimer">
+                                    <i class="fas fa-print"></i>
+                                </button>
+                                <button class="btn-icon" onclick="exportResults()" title="Exporter">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="overview">
+                                <div class="overview-item">
+                                    <div class="overview-label">Moyenne Générale</div>
+                                    <div class="overview-value" id="averageScore">--/20</div>
+                                    <div class="overview-badge" id="averageBadge">--</div>
+                                </div>
+                                
+                                <div class="overview-item">
+                                    <div class="overview-label">Rang</div>
+                                    <div class="overview-value" id="studentRank">--</div>
+                                    <div class="overview-badge">sur <span id="totalStudents">--</span></div>
+                                </div>
+                                
+                                <div class="overview-item">
+                                    <div class="overview-label">Mention</div>
+                                    <div class="overview-value" id="studentMention">--</div>
+                                    <div class="overview-badge" id="mentionColor">--</div>
+                                </div>
+                                
+                                <div class="overview-item">
+                                    <div class="overview-label">Évolution</div>
+                                    <div class="overview-value" id="evolution">--%</div>
+                                    <div class="overview-badge" id="evolutionTrend">
+                                        <i class="fas fa-arrow-up"></i> Progressif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notes Grid -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-book"></i> Notes par Matière</h3>
+                            <div class="card-filter">
+                                <select id="trimesterFilter">
+                                    <option value="1">Trimestre 1</option>
+                                    <option value="2">Trimestre 2 (bientôt)</option>
+                                    <option value="3">Trimestre 3 (bientôt)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="notes-grid" id="notesGrid">
+                                <!-- Notes will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comments -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-comment"></i> Appréciations</h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="comments">
+                                <div class="comment" id="teacherComment">
+                                    <div class="comment-header">
+                                        <i class="fas fa-chalkboard-teacher"></i>
+                                        <strong>Commentaire de l'enseignant :</strong>
+                                    </div>
+                                    <p id="commentText">--</p>
+                                </div>
+                                
+                                <div class="comment" id="directorComment">
+                                    <div class="comment-header">
+                                        <i class="fas fa-user-tie"></i>
+                                        <strong>Observation de la direction :</strong>
+                                    </div>
+                                    <p>Résultats consultés avec succès. Continuez les efforts !</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistics -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-chart-pie"></i> Statistiques</h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="stats-chart">
+                                <div class="chart-container">
+                                    <canvas id="resultsChart"></canvas>
+                                </div>
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background:#4CAF50"></span>
+                                        <span>Excellent (16-20)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background:#8BC34A"></span>
+                                        <span>Bon (14-15.9)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background:#FFC107"></span>
+                                        <span>Passable (10-13.9)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <span class="legend-color" style="background:#FF9800"></span>
+                                        <span>À améliorer (0-9.9)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Next Steps -->
+                    <div class="dashboard-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-bullseye"></i> Prochaines Étapes</h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <ul class="next-steps">
+                                <li>
+                                    <i class="fas fa-calendar-check"></i>
+                                    <div>
+                                        <strong>Réunion parents-professeurs</strong>
+                                        <p>15 Décembre 2025 à 16h00</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fas fa-book-open"></i>
+                                    <div>
+                                        <strong>Évaluations suivantes</strong>
+                                        <p>Trimestre 2: Mars 2026</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <i class="fas fa-gift"></i>
+                                    <div>
+                                        <strong>Tableau d'honneur</strong>
+                                        <p>Publication: 20 Décembre 2025</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Security Log -->
+                <div class="security-log">
+                    <div class="log-header">
+                        <h4><i class="fas fa-shield-alt"></i> Journal de sécurité</h4>
+                    </div>
+                    <div class="log-content">
+                        <div class="log-entry">
+                            <i class="fas fa-check-circle success"></i>
+                            <div>
+                                <strong>Connexion réussie</strong>
+                                <p>Juste maintenant • IP sécurisée</p>
+                            </div>
+                        </div>
+                        <div class="log-entry">
+                            <i class="fas fa-info-circle info"></i>
+                            <div>
+                                <strong>Session active</strong>
+                                <p>Expire dans <span id="sessionTimer">15:00</span> minutes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer secure-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4><i class="fas fa-lock"></i> Sécurité</h4>
+                    <div class="security-features">
+                        <p><i class="fas fa-check"></i> Chiffrement SSL/TLS</p>
+                        <p><i class="fas fa-check"></i> Protection des données</p>
+                        <p><i class="fas fa-check"></i> Journal d'audit</p>
+                        <p><i class="fas fa-check"></i> Conformité RGPD</p>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4><i class="fas fa-headset"></i> Support</h4>
+                    <p>Problèmes de connexion ?</p>
+                    <p>Contactez notre support technique :</p>
+                    <p class="support-email">
+                        <i class="fas fa-envelope"></i>
+                        support@bullesdejoie.bj
+                    </p>
+                    <p class="support-phone">
+                        <i class="fas fa-phone"></i>
+                        +229 01 97 91 94 52
+                    </p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4><i class="fas fa-clock"></i> Accès</h4>
+                    <p>Portail disponible 24h/24 et 7j/7</p>
+                    <p>Maintenance hebdomadaire :</p>
+                    <p>Dimanche 02h00 - 04h00</p>
+                    <div class="server-status">
+                        <span class="status-dot online"></span>
+                        Serveur en ligne
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025-2026 Les Bulles de Joie • Portail sécurisé v2.0</p>
+                <p>
+                    <i class="fas fa-shield-alt"></i>
+                    Dernière mise à jour de sécurité: 05/01/2026
+                </p>
+                <p class="copyright-notice">
+                    Ce système est protégé par des droits d'auteur. Tout accès non autorisé est interdit.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/results.js"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Security Script -->
+    <script>
+        // Security features
+        document.addEventListener('DOMContentLoaded', function() {
+            // Prevent right-click
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            
+            // Prevent text selection
+            document.addEventListener('selectstart', e => e.preventDefault());
+            
+            // Detect dev tools
+            setInterval(() => {
+                const before = new Date();
+                debugger;
+                const after = new Date();
+                if (after - before > 100) {
+                    location.reload();
+                }
+            }, 1000);
+            
+            // Session timer
+            let sessionTime = 900; // 15 minutes in seconds
+            const timerElement = document.getElementById('sessionTimer');
+            
+            const sessionTimer = setInterval(() => {
+                sessionTime--;
+                const minutes = Math.floor(sessionTime / 60);
+                const seconds = sessionTime % 60;
+                
+                if (timerElement) {
+                    timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                }
+                
+                if (sessionTime <= 0) {
+                    clearInterval(sessionTimer);
+                    logout();
+                }
+            }, 1000);
+            
+            // Reset timer on user activity
+            ['click', 'keypress', 'mousemove'].forEach(event => {
+                document.addEventListener(event, () => {
+                    sessionTime = 900;
+                });
+            });
+        });
+        
+        function closeSecurityAlert() {
+            document.getElementById('securityAlert').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
